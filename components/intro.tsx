@@ -1,0 +1,45 @@
+import React from 'react'
+import Image from 'next/image';
+import FunaiIntro from '@/public/images/introfunai.jpg';
+import GetBtn from '@/utils/getBtn';
+import { section } from 'framer-motion/client';
+
+const Intro = () => {
+  return (
+    <div className='flex flex-col md:flex-row justify-between items-center md:items-start  py-8 md:py-12 gap-8'>
+      <div className='max-w-2xl'>
+        <h1 
+          className='font-bold text-3xl md:text-4xl lg:text-5xl leading-tight md:leading-snug'
+          style={{
+            background: 'linear-gradient(to right, #000, #fff)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            lineHeight: '3.5rem',
+            backgroundClip: 'text',
+          }}
+        >
+  Practice GST like a pro<br />
+  Get school news fast<br />    
+  Track your grades & <br />
+  Stay locked in!
+        </h1>
+        <div className='mt-8 '>
+          <GetBtn />
+        </div>
+      </div>
+      <div className='relative w-[35rem]'>
+        <Image 
+          src={FunaiIntro} 
+          alt='FunaiImg' 
+          className='object-cover w-full rounded-xl shadow-xl'
+          style={{
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+          }}
+          priority
+        />
+      </div>
+    </div>
+  )
+}
+
+export default Intro;
