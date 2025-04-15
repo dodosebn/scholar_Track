@@ -5,6 +5,7 @@ import FunaiLogo from "@/public/images/funai-logo.png";
 import GetBtn from "@/utils/getBtn";
 import Logo from "@/utils/logo";
 import { IoMenu } from "react-icons/io5";
+import { motion, AnimatePresence } from "framer-motion";
 
 const NavBar = () => {
   const navLinks = ["Home", "AboutUs", "News", "CGPA Calculator"];
@@ -31,14 +32,21 @@ const NavBar = () => {
         <div className="md:flex hidden">
           <ul className="flex gap-6">
             {navLinks.map((itm, ndx) => (
-              <li key={ndx} className="hover:text-[#000] hover:font-bold cursor-pointer">
-                {itm}
+              <li key={ndx} className="relative group">
+                <span className="hover:text-[#000] hover:font-bold cursor-pointer">
+                  {itm}
+                </span>
+                <motion.span 
+                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-600"
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.3 }}
+                />
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="md:flex hidden">
+        <div className="md:flex hidden ">
           <GetBtn />
         </div>
 
@@ -46,23 +54,34 @@ const NavBar = () => {
           <IoMenu onClick={handleDropDown} size={24} className="text-gray-700" />
         </div>
 
-        {isMobile && (
-          <div className="absolute top-16 left-0 right-0 bg-gray-50 p-6 flex flex-col gap-6 md:hidden shadow-lg z-50 border-t border-gray-200">
-            <ul className="flex flex-col gap-6">
-              {navLinks.map((itm, ndx) => (
-                <li
-                  key={ndx}
-                  className="hover:text-[#000] hover:font-bold cursor-pointer text-gray-800"
-                >
-                  {itm}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-2">
-              <GetBtn />
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {isMobile && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="absolute top-16 left-7 rounded-md right-7 bg-gray-50 p-6 flex flex-col gap-6 md:hidden shadow-lg z-50 border-t border-gray-200"
+            >
+              <ul className="flex flex-col gap-6 justify-center text-center">
+                {navLinks.map((itm, ndx) => (
+                  <li key={ndx} className="relative group">
+                    <span className="hover:text-[#000] hover:font-bold cursor-pointer text-gray-800">
+                      {itm}
+                    </span>
+                    <motion.span 
+                      className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-600"
+                      whileHover={{ width: "100%" }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-2 flex justify-center text-center">
+                <GetBtn />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );

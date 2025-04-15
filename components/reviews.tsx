@@ -6,8 +6,20 @@ import Image from 'next/image';
 
 const Reviews = () => {
   return (
-    <div className="overflow-hidden py-12">
-      <h1 className="text-3xl font-bold text-center mb-12">What They've Said</h1>
+    <motion.div 
+    initial={{ opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    viewport={{ once: true }}
+    className="overflow-hidden py-12"
+  >
+    <motion.h1 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="text-3xl font-bold text-center mb-12"
+    >
+      What They've Said
+    </motion.h1>
       
       <div className="relative overflow-x-hidden">
         <motion.div 
@@ -51,7 +63,7 @@ const Reviews = () => {
           ))}
         </motion.div>
       </div>
-    </div>
+      </motion.div>
   
   );
 };
