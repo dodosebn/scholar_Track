@@ -10,9 +10,11 @@ export default function Home() {
    <div>
     <div className=' md:px-10 p-4'>
     <NavBar />
+    <main className="pt-[3rem]">
     <Intro />
     <Explan />
     <Reviews />
+    </main>
     </div>
     <SemiFooter />
     <Footer/>

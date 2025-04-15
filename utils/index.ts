@@ -1,3 +1,4 @@
 import GetBtn from "./getBtn";
 import Logo from "./logo";
-export default {GetBtn, Logo};
+import ExpNum from "./expNum_Btn";
+export default {GetBtn, Logo, ExpNum};
