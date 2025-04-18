@@ -6,9 +6,15 @@ import GetBtn from "@/utils/getBtn";
 import Logo from "@/utils/logo";
 import { IoMenu } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import TransitionLink from "@/utils/transitionLink";
 
 const NavBar = () => {
-  const navLinks = ["Home", "AboutUs", "News", "CGPA Calculator"];
+  const navLinks = [
+    {name:"Home", id: 1, linkPath: '/'}, 
+    {name: "AboutUs", id:2, linkPath: 'About'}, 
+    {name:"News", id:3, linkPath:'News'}, 
+    {name:"CGPA Calculator", id:4, linkPath:'GPACalc'}];
   const [isMobile, setIsMobile] = useState(false);
 
   const handleDropDown = () => {
@@ -31,10 +37,10 @@ const NavBar = () => {
 
         <div className="md:flex hidden">
           <ul className="flex gap-6">
-            {navLinks.map((itm, ndx) => (
-              <li key={ndx} className="relative group">
+            {navLinks.map((itm) => (
+              <li key={itm.id} className="relative group">
                 <span className="hover:text-[#000] hover:font-bold cursor-pointer">
-                  {itm}
+                  <TransitionLink href={itm.linkPath}>{itm.name}</TransitionLink >
                 </span>
                 <motion.span 
                   className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-600"
@@ -63,10 +69,10 @@ const NavBar = () => {
               className="absolute top-16 left-7 rounded-md right-7 bg-gray-50 p-6 flex flex-col gap-6 md:hidden shadow-lg z-50 border-t border-gray-200"
             >
               <ul className="flex flex-col gap-6 justify-center text-center">
-                {navLinks.map((itm, ndx) => (
-                  <li key={ndx} className="relative group">
+                {navLinks.map((itm) => (
+                  <li key={itm.id} className="relative group">
                     <span className="hover:text-[#000] hover:font-bold cursor-pointer text-gray-800">
-                      {itm}
+                    <TransitionLink  href={itm.linkPath}> {itm.name}</TransitionLink >
                     </span>
                     <motion.span 
                       className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-600"

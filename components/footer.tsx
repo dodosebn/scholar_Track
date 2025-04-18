@@ -12,7 +12,6 @@ const Footer = () => {
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        // Add your submit logic here
     };
 
     return (
