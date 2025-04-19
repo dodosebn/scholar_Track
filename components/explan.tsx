@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
+import Divider from '@/utils/divider';
 
 const Explan = () => {
   return (
@@ -35,8 +36,7 @@ const Explan = () => {
         </motion.p>
       </div>
 
-      <div className='hidden md:block border-l border-gray-200 h-auto mx-2'></div>
-
+<Divider />
       <div className='flex-1 md:pt-6'>
         <ul className="space-y-6">
           {[

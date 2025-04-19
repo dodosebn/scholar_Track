@@ -6,7 +6,6 @@ import GetBtn from "@/utils/getBtn";
 import Logo from "@/utils/logo";
 import { IoMenu } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 import TransitionLink from "@/utils/transitionLink";
 
 const NavBar = () => {

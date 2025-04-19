@@ -1,3 +1,4 @@
 import GetBtn from "./getBtn";
 import Logo from "./logo";
-export default {GetBtn, Logo};
+import Divider from "./divider";
+export default {GetBtn, Logo, Divider};
