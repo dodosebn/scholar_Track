@@ -1,6 +1,6 @@
 import NavBar from '@/components/navBar';
 import React from 'react'
-import GpCalculator from './calc_comp/gpIntro';
+import GpCalculator from './calc_comp/gpCalculator';
 
 const page = () => {
   return (
