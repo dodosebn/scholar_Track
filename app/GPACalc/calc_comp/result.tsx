@@ -3,8 +3,6 @@ import React from 'react';
 interface ResultProps {
   result: number | null;
   mode: 'Gp' | 'cgpa';
-  // resultMode: boolean;
-  // setResultMode: () => void;
 }
 
 const Result: React.FC<ResultProps> = ({ result, mode}) => {
@@ -12,7 +10,7 @@ const Result: React.FC<ResultProps> = ({ result, mode}) => {
 <React.Fragment>
 {<div>
     {result !== null && (
-    <section style={{ marginTop: '20px', fontSize: '1.2em' }}>
+    <section className='text-center pt-5'>
         <h2>
         Result: {mode.toUpperCase()} = {result.toFixed(2)}
         </h2>

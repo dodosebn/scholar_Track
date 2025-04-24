@@ -1,2 +1,3 @@
 import Header from "./header";
-export default {Header}
+import Imp_Notes from "./imp_Notes";
+export default {Header, Imp_Notes}

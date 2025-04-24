@@ -16,7 +16,6 @@ const GpCalculator: React.FC = () => {
 
   const [courses, setCourses] = useState<Course[]>([{ grade: 'A', units: 1 }]);
   const [result, setResult] = useState<number | null>(null);
-const [resultMode, setResultMode] = useState(false);
   const handleGradeChange = (index: number, value: Grade) => {
     const updatedCourses = [...courses];
     updatedCourses[index].grade = value;
@@ -56,8 +55,8 @@ const [resultMode, setResultMode] = useState(false);
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
-      <h1>GP Calculator</h1>
+    <div>
+      <h1>Hey Come Track Your Progress!</h1>
 
       <Calc_Main
         Grade={grades}
@@ -69,7 +68,7 @@ const [resultMode, setResultMode] = useState(false);
         calculate={calculate}
       />
 
-      <Result result={result} mode={'Gp'} resultMode={resultMode}/>
+      <Result result={result} mode={'Gp'} />
     </div>
   );
 };

@@ -42,7 +42,6 @@ const Imp_Notes = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      {/* Background Image */}
       <motion.div
         initial={{ scale: 1.1 }}
         animate={{ scale: 1 }}
@@ -58,7 +57,6 @@ const Imp_Notes = () => {
         />
       </motion.div>
 
-      {/* Gradient Overlay */}
       <motion.div
         className="absolute inset-0 z-10 bg-gradient-to-br from-[#000000a8] via-[#1a1a1acc] to-[#333333a1]"
         initial={{ opacity: 0 }}
@@ -66,7 +64,6 @@ const Imp_Notes = () => {
         transition={{ duration: 1 }}
       />
 
-      {/* Animated Wave Background */}
       <motion.div 
         className="absolute inset-0 z-20 wave-bg pointer-events-none"
         style={{
@@ -78,7 +75,6 @@ const Imp_Notes = () => {
         animate="animate"
       />
 
-      {/* Content */}
       <motion.main 
         className="absolute inset-0 z-30 flex flex-col justify-center items-center px-4 sm:px-6 text-white overflow-y-auto py-8"
         variants={container}
