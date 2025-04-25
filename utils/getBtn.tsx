@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 const GetBtn = () => {
   return (
     <button className='
@@ -13,7 +12,7 @@ const GetBtn = () => {
       transition-all duration-200
       focus:outline-none focus:ring-2 focus:ring-green-300 focus:ring-offset-2
     '>
-      Getting Started
+     Getting Started
     </button>
   )
 }

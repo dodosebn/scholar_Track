@@ -52,7 +52,7 @@ const NavBar = () => {
         </div>
 
         <div className="md:flex hidden ">
-          <GetBtn />
+        <TransitionLink href="/SignUp"> <GetBtn /></TransitionLink> 
         </div>
 
         <div className="md:hidden">
