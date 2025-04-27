@@ -1,17 +1,51 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import useAuthStore from '@/app/store/authState';
+import { supabase } from '@/app/store/supabaseClient'; // ✅ Make sure this import is correct
 
 const SigningIn = () => {
   const { email, password, handleEmailChange, handlePasswordChange } = useAuthStore();
+  const [loading, setLoading] = useState(false); // ✅ loading state
+
+  async function signIn(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault(); // stop page reload
+    setLoading(true); // ✅ Start loading
+
+    if (password.length < 6) {
+      alert('Password must be at least 6 characters.');
+      setLoading(false);
+      return;
+    }
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+
+    if (error) {
+      alert(error.message);
+      console.error('Sign-in error:', error);
+    } else {
+      console.log('Signed in successfully:', data);
+
+      // After successful login, redirect the user
+      if (data) {
+        const { session } = data;
+        // You can add the redirect URL like this:
+        window.location.href = "http://localhost:3000/GPACalc";
+      }
+    }
+
+    setLoading(false); // ✅ Stop loading after attempt
+  }
 
   return (
-    <div className='min-h-screen flex flex-col justify-center items-center bg-gray-50 p-4'>
+    <div className='min-h-screen flex flex-col justify-center items-center p-4'>
       <div className='w-full max-w-md bg-white p-8 rounded-lg shadow-md'>
         <h1 className='text-2xl font-bold text-center mb-6 text-gray-800'>Welcome Back</h1>
         
-        <form className='flex flex-col gap-4'>
+        <form className='flex flex-col gap-4' onSubmit={signIn}>
           <input 
             type="email" 
             className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'
@@ -32,14 +66,16 @@ const SigningIn = () => {
 
           <button 
             type="submit" 
-            className='w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition duration-200 mt-4'
+            disabled={loading} // ✅ disable while loading
+            className={`w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition duration-200 mt-4 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
-            Sign In
+            {loading ? 'Signing In...' : 'Sign In'}
           </button>
+          <span>Forgotten Password</span>
         </form>
 
         <p className='text-center mt-6 text-gray-600'>
-          Don't have an Account? {' '}
+          Don't have an Account?{' '}
           <Link href='/SignUp' className='text-green-600 hover:underline font-medium'>
             Sign Up
           </Link>

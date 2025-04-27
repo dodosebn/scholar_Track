@@ -13,7 +13,6 @@ const GpCalculator: React.FC = () => {
     E: 1,
     F: 0
   };
-
   const [courses, setCourses] = useState<Course[]>([{ grade: 'A', units: 1 }]);
   const [result, setResult] = useState<number | null>(null);
   const handleGradeChange = (index: number, value: Grade) => {

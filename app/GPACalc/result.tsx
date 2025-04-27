@@ -1,9 +1,6 @@
 import React from 'react';
+import { ResultProps } from '@/types';
 
-interface ResultProps {
-  result: number | null;
-  mode: 'Gp' | 'cgpa';
-}
 
 const Result: React.FC<ResultProps> = ({ result, mode}) => {
   return (

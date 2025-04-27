@@ -1,10 +1,5 @@
 import React from 'react';
-
-interface ProperIntroProps {
-  title: string;
-  note: string;
-}
-
+import { ProperIntroProps } from '@/types';
 const ProperIntro: React.FC<ProperIntroProps> = ({ title, note }) => {
   return (
     <div className='w-full bg-white p-3 rounded-md bg-opacity-35 text-[#000]'>

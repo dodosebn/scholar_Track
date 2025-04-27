@@ -1,11 +1,5 @@
 import {create} from 'zustand';
-interface AuthState {
-    email: string;
-    password: string;
-    handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handlePasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  }
-  
+import { AuthState } from '@/types';
   const useAuthStore = create<AuthState>((set) => ({
     email: '',
     password: '',

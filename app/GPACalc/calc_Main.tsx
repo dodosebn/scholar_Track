@@ -1,15 +1,5 @@
 import React from 'react';
-import { Course, Grade } from '@/types';
-
-interface CalcMainProps {
-  Grade: Record<Grade, number>;
-  courses: Course[];
-  handleGradeChange: (index: number, value: Grade) => void;
-  handleUnitsChange: (index: number, value: number) => void;
-  removeCourse: (index?: number) => void;
-  addCourse: () => void;
-  calculate: () => void;
-}
+import { Course, Grade, CalcMainProps } from '@/types';
 
 const Calc_Main: React.FC<CalcMainProps> = ({
   Grade,
