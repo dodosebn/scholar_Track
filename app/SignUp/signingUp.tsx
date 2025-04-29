@@ -26,7 +26,7 @@ const SigningUp = () => {
         email,
         password,
         options: {
-          emailRedirectTo: "http://localhost:3000/GPACalc",
+          emailRedirectTo: "http://localhost:3000/TodoList",
         },
       });
 
