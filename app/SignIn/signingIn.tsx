@@ -2,15 +2,15 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import useAuthStore from '@/app/store/authState';
-import { supabase } from '@/app/store/supabaseClient'; // ✅ Make sure this import is correct
+import { supabase } from '@/app/store/supabaseClient';
 
 const SigningIn = () => {
   const { email, password, handleEmailChange, handlePasswordChange } = useAuthStore();
-  const [loading, setLoading] = useState(false); // ✅ loading state
+  const [loading, setLoading] = useState(false); 
 
   async function signIn(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault(); // stop page reload
-    setLoading(true); // ✅ Start loading
+    event.preventDefault(); 
+    setLoading(true); 
 
     if (password.length < 6) {
       alert('Password must be at least 6 characters.');
@@ -29,15 +29,12 @@ const SigningIn = () => {
     } else {
       console.log('Signed in successfully:', data);
 
-      // After successful login, redirect the user
       if (data) {
-        const { session } = data;
-        // You can add the redirect URL like this:
-        window.location.href = "http://localhost:3000/GPACalc";
+        window.location.href = "http://localhost:3000/GPACalc";  
       }
     }
 
-    setLoading(false); // ✅ Stop loading after attempt
+    setLoading(false);
   }
 
   return (
@@ -66,7 +63,7 @@ const SigningIn = () => {
 
           <button 
             type="submit" 
-            disabled={loading} // ✅ disable while loading
+            disabled={loading} 
             className={`w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition duration-200 mt-4 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             {loading ? 'Signing In...' : 'Sign In'}
