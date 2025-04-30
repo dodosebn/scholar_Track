@@ -21,7 +21,7 @@ const NavBar = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-gray-50 shadow-sm">
       <div className="flex justify-between items-center py-3 px-4 md:px-10">
         <div className="flex items-center">
           <Image

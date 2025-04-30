@@ -4,4 +4,5 @@ import Explan from "./explan";
 import Reviews from "./reviews";
 import SemiFooter from "./semiFooter";
 import Footer from "./footer";
-export default {NavBar, Intro, Explan, Reviews, SemiFooter, Footer};
+import DashBoard from "../app/DashB/dashBoard";
+export default {NavBar, Intro, Explan, Reviews, SemiFooter, Footer, DashBoard};

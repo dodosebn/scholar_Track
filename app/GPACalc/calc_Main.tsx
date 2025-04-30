@@ -1,5 +1,5 @@
 import React from 'react';
-import { Course, Grade, CalcMainProps } from '@/types';
+import { Grade, CalcMainProps } from '@/types';
 
 const Calc_Main: React.FC<CalcMainProps> = ({
   Grade,

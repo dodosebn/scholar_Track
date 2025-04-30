@@ -1,7 +1,6 @@
 import React from 'react';
 import { ResultProps } from '@/types';
 
-
 const Result: React.FC<ResultProps> = ({ result, mode}) => {
   return (
 <React.Fragment>
