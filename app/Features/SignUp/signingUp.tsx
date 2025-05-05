@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import useAuthStore from "@/app/store/authState";
 import Link from "next/link";
-import { supabase } from "../store/supabaseClient";
+import { supabase } from "@/app/store/supabaseClient";
 
 const SigningUp = () => {
   const { email, password, handleEmailChange, handlePasswordChange } =
@@ -26,7 +26,7 @@ const SigningUp = () => {
         email,
         password,
         options: {
-          emailRedirectTo: "http://localhost:3000/DashB",
+          emailRedirectTo: "http://localhost:3000/DashBoard",
         },
       });
 
@@ -114,7 +114,7 @@ const SigningUp = () => {
         <p className="text-center mt-6 text-gray-600">
           Already have an Account?{" "}
           <Link
-            href="/SignIn"
+            href="/Features/SignIn"
             className="text-green-600 hover:underline font-medium"
           >
             Sign In

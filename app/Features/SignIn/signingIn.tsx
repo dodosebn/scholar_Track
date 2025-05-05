@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import useAuthStore from '@/app/store/authState';
 import { supabase } from '@/app/store/supabaseClient'; 
+import { useRouter } from 'next/navigation';
 
 const SigningIn = () => {
+  const router = useRouter();
+
   const { email, password, handleEmailChange, handlePasswordChange } = useAuthStore();
   const [loading, setLoading] = useState(false); 
 
@@ -31,7 +34,7 @@ const SigningIn = () => {
 
       if (data) {
         const { session } = data;
-        window.location.href = "http://localhost:3000/DashB";
+        router.push('/AfterSignUp');
       }
     }
 
@@ -69,7 +72,7 @@ const SigningIn = () => {
           >
             {loading ? 'Signing In...' : 'Sign In'}
           </button>
-          <span>Forgotten Password</span>
+          <span><Link href='/Features/forgetPass'>Forgotten Password</Link></span>
         </form>
 
         <p className='text-center mt-6 text-gray-600'>

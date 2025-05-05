@@ -1,5 +1,5 @@
 import React from 'react'
-import DashBoard from './dashBoard'
+import DashBoard from './DashBoard/dashBoard'
 
 const page = () => {
   return (
