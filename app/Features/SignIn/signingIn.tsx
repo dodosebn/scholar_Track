@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import useAuthStore from '@/app/store/authState';
+import {useAuthStore} from '@/app/store/authState';
 import { supabase } from '@/app/store/supabaseClient'; 
 import { useRouter } from 'next/navigation';
 

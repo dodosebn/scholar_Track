@@ -12,6 +12,11 @@ export interface ProperIntroProps {
   title: string;
   note: string;
 }
+export interface ImageStore {
+  image: string;
+  setImage: (url: string) => void;
+  uploadImage: (file: File, userId: string) => Promise<string | null>;
+}
 
 export interface AuthState {
     email: string;

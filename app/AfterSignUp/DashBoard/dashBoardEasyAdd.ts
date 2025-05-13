@@ -44,7 +44,7 @@ export const DashElm: DashboardItem[] = [
     {
       id: 1,
       name: 'settings',
-      path: '/Settings',
+      path: '/AfterSignUp/Settings',
       icon: CiSettings
     },
     {

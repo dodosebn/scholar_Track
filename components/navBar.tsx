@@ -11,9 +11,9 @@ import TransitionLink from "@/utils/transitionLink";
 const NavBar = () => {
   const navLinks = [
     {name:"Home", id: 1, linkPath: '/'}, 
-    {name: "AboutUs", id:2, linkPath: 'About'}, 
+    {name: "AboutUs", id:2, linkPath: '/Features/About'}, 
     {name:"News", id:3, linkPath:'News'}, 
-    {name:"CGPA Calculator", id:4, linkPath:'GPACalc'}];
+    {name:"CGPA Calculator", id:4, linkPath:'/Features/GPACalc'}];
   const [isMobile, setIsMobile] = useState(false);
 
   const handleDropDown = () => {
