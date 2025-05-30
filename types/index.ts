@@ -24,6 +24,11 @@ export interface AuthState {
     handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handlePasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   }
+  export interface setAuthProps {
+    email: '',
+    name: '',
+    bio: ''
+  }
   export interface CalcMainProps {
     Grade: Record<Grade, number>;
     courses: Course[];
@@ -33,3 +38,19 @@ export interface AuthState {
     addCourse: () => void;
     calculate: () => void;
   }
+  export type ProfileDataProps = {
+    id: string;
+    name: string;
+    email: string;
+    bio: string;
+    avatar_url: string | null;
+    public_email: boolean;
+    pronouns: string;
+    website_url: string;
+    social_links: {
+      twitter?: string;
+      github?: string;
+      linkedin?: string;
+      portfolio?: string;
+    };
+  };

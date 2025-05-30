@@ -1,10 +1,10 @@
 import React from 'react'
-import DashBoard from './DashBoard/dashBoard'
+import UserProfile from './Settings/userProfile'
 
 const page = () => {
   return (
     <div>
-      <DashBoard />
+      <UserProfile />
     </div>
   )
 }

@@ -1,5 +1,6 @@
+// app/api/cloudinary/route.ts
 import { v2 as cloudinary } from 'cloudinary';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME!,
@@ -7,20 +8,34 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_APISECRET!,
 });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method Not Allowed' });
-  }
-
+export async function POST(request: Request) {
   try {
-    const { image } = req.body; 
+    const formData = await request.formData();
+    const file = formData.get('file') as File;
 
-    const result = await cloudinary.uploader.upload(image, {
+    if (!file) {
+      return NextResponse.json(
+        { error: 'No file provided' },
+        { status: 400 }
+      );
+    }
+
+    // Convert file to buffer
+    const buffer = await file.arrayBuffer();
+    const base64String = Buffer.from(buffer).toString('base64');
+    const dataUri = `data:${file.type};base64,${base64String}`;
+
+    const result = await cloudinary.uploader.upload(dataUri, {
       folder: 'user_profile_images',
+      resource_type: 'auto',
     });
 
-    return res.status(200).json({ url: result.secure_url });
+    return NextResponse.json({ url: result.secure_url });
   } catch (error: any) {
-    return res.status(500).json({ error: error.message });
+    console.error('Cloudinary upload error:', error);
+    return NextResponse.json(
+      { error: error.message || 'Upload failed' },
+      { status: 500 }
+    );
   }
 }

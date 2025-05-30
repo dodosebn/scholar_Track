@@ -1,6 +1,5 @@
 import React from 'react';
-import DashBoard from './page';
-
+import DashBoard from './DashBoard/dashBoard';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (

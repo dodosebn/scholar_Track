@@ -82,7 +82,7 @@ const NavBar = () => {
                 ))}
               </ul>
               <div className="mt-2 flex justify-center text-center">
-                <GetBtn />
+        <TransitionLink href="/Features/SignUp"> <GetBtn /></TransitionLink> 
               </div>
             </motion.div>
           )}

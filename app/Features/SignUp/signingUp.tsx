@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useAuthStore } from '@/app/store/authState';
+import { useAuthStore,  } from '@/app/store/authState';
 import Link from 'next/link';
 import { supabase } from '@/app/store/supabaseClient';
 
