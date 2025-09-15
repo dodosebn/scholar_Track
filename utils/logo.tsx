@@ -1,8 +1,12 @@
-import React from 'react'
+import React from "react";
+import TransitionLink from "./transitionLink";
 
 const Logo = () => {
   return (
-<h2 className="text-xl logoFont">ScholarHub</h2>  )
-}
+    <TransitionLink href="/">
+      <h2 className="text-xl logoFont cursor-default">ScholarHub</h2>
+    </TransitionLink>
+  );
+};
 
 export default Logo;

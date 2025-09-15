@@ -1,12 +1,12 @@
-'use client';
+"use client";
 import Image from "next/image";
 import React, { useEffect, useState, useRef } from "react";
-import boy1Img from '@/public/images/boy_1.avif';
-import { HiOutlinePencilSquare } from 'react-icons/hi2';
-import { FiLoader } from 'react-icons/fi';
-import { toast } from 'react-toastify';
-import Link from 'next/link';
-import { PublicProfMaps } from './AllSetMaps';
+import boy1Img from "@/public/images/boy_1.avif";
+import { HiOutlinePencilSquare } from "react-icons/hi2";
+import { FiLoader } from "react-icons/fi";
+import { toast } from "react-toastify";
+import Link from "next/link";
+import { PublicProfMaps } from "./AllSetMaps";
 import { supabase } from "@/app/store/supabaseClient";
 import { uploadToCloudinary } from "@/app/store/cloudinary";
 
@@ -33,9 +33,9 @@ const UserProfile = () => {
   // Function to fetch profile data
   const fetchProfileData = async (userId: string) => {
     const { data: profile, error: profileError } = await supabase
-      .from('settings')
-      .select('name, bio, avatar_url, pronouns, website_url, social_links')
-      .eq('user_id', userId)
+      .from("settings")
+      .select("name, bio, avatar_url, pronouns, website_url, social_links")
+      .eq("user_id", userId)
       .single();
 
     if (!profileError && profile) {
@@ -46,23 +46,26 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: { user }, error } = await supabase.auth.getUser();
+        const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser();
         if (error) throw error;
-        
+
         if (user) {
           setUser(user);
           await fetchProfileData(user.id);
-          
+
           // Set up realtime subscription for profile updates
           const channel = supabase
-            .channel('profile_changes')
+            .channel("profile_changes")
             .on(
-              'postgres_changes',
+              "postgres_changes",
               {
-                event: '*',
-                schema: 'public',
-                table: 'settings',
-                filter: `user_id=eq.${user.id}`
+                event: "*",
+                schema: "public",
+                table: "settings",
+                filter: `user_id=eq.${user.id}`,
               },
               (payload) => {
                 fetchProfileData(user.id); // Refresh profile data on changes
@@ -89,14 +92,14 @@ const UserProfile = () => {
     const file = e.target.files?.[0];
     if (!file || !user?.id) return;
 
-    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const validTypes = ["image/jpeg", "image/png", "image/webp"];
     if (!validTypes.includes(file.type)) {
-      toast.error('Please upload a JPEG, PNG, or WebP image');
+      toast.error("Please upload a JPEG, PNG, or WebP image");
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      toast.error('Image size must be less than 5MB');
+      toast.error("Image size must be less than 5MB");
       return;
     }
 
@@ -107,24 +110,25 @@ const UserProfile = () => {
       // Update both auth metadata and settings table
       const updates = {
         avatar_url: imageUrl,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       };
 
-      const [{ error: authError }, { error: settingsError }] = await Promise.all([
-        supabase.auth.updateUser({ data: { avatar_url: imageUrl } }),
-        supabase.from('settings').upsert({ 
-          user_id: user.id,
-          avatar_url: imageUrl,
-          updated_at: new Date().toISOString()
-        })
-      ]);
+      const [{ error: authError }, { error: settingsError }] =
+        await Promise.all([
+          supabase.auth.updateUser({ data: { avatar_url: imageUrl } }),
+          supabase.from("settings").upsert({
+            user_id: user.id,
+            avatar_url: imageUrl,
+            updated_at: new Date().toISOString(),
+          }),
+        ]);
 
       if (authError || settingsError) throw authError || settingsError;
 
-      toast.success('Profile picture updated!');
-      setProfile(prev => prev ? { ...prev, avatar_url: imageUrl } : null);
+      toast.success("Profile picture updated!");
+      setProfile((prev) => (prev ? { ...prev, avatar_url: imageUrl } : null));
     } catch (err: any) {
-      toast.error(err.message || 'Failed to upload image');
+      toast.error(err.message || "Failed to upload image");
     } finally {
       setIsUploading(false);
     }
@@ -171,7 +175,7 @@ const UserProfile = () => {
 
             <div className="text-center">
               <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
-                {profile?.name || user?.email?.split('@')[0] || 'User'}
+                {profile?.name || user?.email?.split("@")[0] || "User"}
               </h2>
               {profile?.pronouns && (
                 <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -190,12 +194,14 @@ const UserProfile = () => {
 
             {(profile?.website_url || profile?.social_links) && (
               <div className="space-y-2">
-                <h3 className="font-medium text-gray-800 dark:text-white">Links</h3>
+                <h3 className="font-medium text-gray-800 dark:text-white">
+                  Links
+                </h3>
                 <div className="flex flex-wrap gap-4">
                   {profile?.website_url && (
-                    <a 
-                      href={profile.website_url} 
-                      target="_blank" 
+                    <a
+                      href={profile.website_url}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:underline dark:text-blue-400"
                     >
@@ -203,9 +209,9 @@ const UserProfile = () => {
                     </a>
                   )}
                   {profile?.social_links?.twitter && (
-                    <a 
-                      href={profile.social_links.twitter} 
-                      target="_blank" 
+                    <a
+                      href={profile.social_links.twitter}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:underline dark:text-blue-400"
                     >
@@ -213,9 +219,9 @@ const UserProfile = () => {
                     </a>
                   )}
                   {profile?.social_links?.github && (
-                    <a 
-                      href={profile.social_links.github} 
-                      target="_blank" 
+                    <a
+                      href={profile.social_links.github}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:underline dark:text-blue-400"
                     >
@@ -223,9 +229,9 @@ const UserProfile = () => {
                     </a>
                   )}
                   {profile?.social_links?.linkedin && (
-                    <a 
-                      href={profile.social_links.linkedin} 
-                      target="_blank" 
+                    <a
+                      href={profile.social_links.linkedin}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:underline dark:text-blue-400"
                     >
@@ -249,7 +255,9 @@ const UserProfile = () => {
                 prefetch={false}
               >
                 <Icon className="text-gray-600 dark:text-gray-300 text-lg" />
-                <span className="text-gray-700 dark:text-gray-300">{item.name}</span>
+                <span className="text-gray-700 dark:text-gray-300">
+                  {item.name}
+                </span>
               </Link>
             );
           })}

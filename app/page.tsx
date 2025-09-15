@@ -7,17 +7,17 @@ import SemiFooter from "@/components/semiFooter";
 
 export default function Home() {
   return (
-   <div>
-    <div className=' md:px-10 p-4'>
-    <NavBar />
-    <main className="pt-[3rem]">
-    <Intro />
-    <Explan />
-    <Reviews />
-    </main>
+    <div>
+      <div className=" md:px-10 p-4">
+        <NavBar />
+        <main className="pt-[3rem]">
+          <Intro />
+        </main>
+      </div>
+       <Explan />
+          <Reviews />
+      <SemiFooter />
+      <Footer />
     </div>
-    <SemiFooter />
-    <Footer/>
-   </div>
   );
 }

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { HiOutlinePencilSquare, HiOutlineScale } from "react-icons/hi2";
 import { FiLoader, FiCheckCircle } from "react-icons/fi";
-import boy1Img from '@/public/images/boy_1.avif';
-import { toast } from 'react-toastify';
+import boy1Img from "@/public/images/boy_1.avif";
+import { toast } from "react-toastify";
 import { supabase } from "@/app/store/supabaseClient";
 import { uploadToCloudinary } from "@/app/store/cloudinary";
 
@@ -59,15 +59,15 @@ const ProfileSettings = () => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [profile, setProfile] = useState<ProfileDataProps | null>(null);
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    bio: '',
+    name: "",
+    bio: "",
     public_email: false,
-    pronouns: '',
-    website_url: '',
-    twitter: '',
-    github: '',
-    linkedin: '',
-    portfolio: ''
+    pronouns: "",
+    website_url: "",
+    twitter: "",
+    github: "",
+    linkedin: "",
+    portfolio: "",
   });
 
   // Validate URL format
@@ -86,44 +86,47 @@ const ProfileSettings = () => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const { data: { user }, error } = await supabase.auth.getUser();
+        const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser();
         if (error) throw error;
-        
+
         if (user) {
           setUser({
             id: user.id,
             email: user.email,
-            user_metadata: user.user_metadata
+            user_metadata: user.user_metadata,
           });
 
           // Fetch profile from settings table
           const { data: profile, error: profileError } = await supabase
-            .from('settings')
-            .select('*')
-            .eq('user_id', user.id)
+            .from("settings")
+            .select("*")
+            .eq("user_id", user.id)
             .single();
 
           if (!profileError && profile) {
             setProfile(profile);
             setFormData({
-              name: profile.name || user.user_metadata?.name || '',
-              bio: profile.bio || '',
+              name: profile.name || user.user_metadata?.name || "",
+              bio: profile.bio || "",
               public_email: profile.public_email || false,
-              pronouns: profile.pronouns || '',
-              website_url: profile.website_url || '',
-              twitter: profile.social_links?.twitter || '',
-              github: profile.social_links?.github || '',
-              linkedin: profile.social_links?.linkedin || '',
-              portfolio: profile.social_links?.portfolio || ''
+              pronouns: profile.pronouns || "",
+              website_url: profile.website_url || "",
+              twitter: profile.social_links?.twitter || "",
+              github: profile.social_links?.github || "",
+              linkedin: profile.social_links?.linkedin || "",
+              portfolio: profile.social_links?.portfolio || "",
             });
-          } else if (profileError && profileError.code === 'PGRST116') {
+          } else if (profileError && profileError.code === "PGRST116") {
             // No profile exists yet, create one
             const { data: newProfile, error: createError } = await supabase
-              .from('settings')
+              .from("settings")
               .insert({
                 user_id: user.id,
-                name: user.user_metadata?.name || '',
-                updated_at: new Date().toISOString()
+                name: user.user_metadata?.name || "",
+                updated_at: new Date().toISOString(),
               })
               .select()
               .single();
@@ -148,14 +151,14 @@ const ProfileSettings = () => {
     const file = e.target.files?.[0];
     if (!file || !user?.id) return;
 
-    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const validTypes = ["image/jpeg", "image/png", "image/webp"];
     if (!validTypes.includes(file.type)) {
-      toast.error('Please upload a JPEG, PNG, or WebP image');
+      toast.error("Please upload a JPEG, PNG, or WebP image");
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      toast.error('Image size must be less than 5MB');
+      toast.error("Image size must be less than 5MB");
       return;
     }
 
@@ -165,47 +168,58 @@ const ProfileSettings = () => {
 
       const updates = {
         avatar_url: imageUrl,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       };
 
-      const [{ error: authError }, { error: settingsError }] = await Promise.all([
-        supabase.auth.updateUser({ data: { avatar_url: imageUrl } }),
-        supabase.from('settings')
-          .upsert({ 
-            user_id: user.id,
-            ...updates
-          })
-          .eq('user_id', user.id)
-      ]);
+      const [{ error: authError }, { error: settingsError }] =
+        await Promise.all([
+          supabase.auth.updateUser({ data: { avatar_url: imageUrl } }),
+          supabase
+            .from("settings")
+            .upsert({
+              user_id: user.id,
+              ...updates,
+            })
+            .eq("user_id", user.id),
+        ]);
 
       if (authError || settingsError) throw authError || settingsError;
 
-      toast.success('Profile picture updated successfully!');
-      setProfile(prev => prev ? { ...prev, avatar_url: imageUrl } : null);
-      
+      toast.success("Profile picture updated successfully!");
+      setProfile((prev) => (prev ? { ...prev, avatar_url: imageUrl } : null));
+
       // Update user metadata in state
-      setUser(prev => prev ? {
-        ...prev,
-        user_metadata: {
-          ...prev.user_metadata,
-          avatar_url: imageUrl
-        }
-      } : null);
+      setUser((prev) =>
+        prev
+          ? {
+              ...prev,
+              user_metadata: {
+                ...prev.user_metadata,
+                avatar_url: imageUrl,
+              },
+            }
+          : null
+      );
     } catch (err: any) {
-      toast.error(err.message || 'Failed to upload image');
+      toast.error(err.message || "Failed to upload image");
     } finally {
       setIsUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = '';
+      if (fileInputRef.current) fileInputRef.current.value = "";
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value, type } = e.target;
-    const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
-    
-    setFormData(prev => ({
+    const checked =
+      type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
+
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -215,10 +229,19 @@ const ProfileSettings = () => {
     if (!user?.id) return;
 
     // Validate URLs
-    const urlFields = ['website_url', 'twitter', 'github', 'linkedin', 'portfolio'];
+    const urlFields = [
+      "website_url",
+      "twitter",
+      "github",
+      "linkedin",
+      "portfolio",
+    ];
     for (const field of urlFields) {
-      if (formData[field as keyof FormData] && !validateUrl(formData[field as keyof FormData] as string)) {
-        toast.error(`Please enter a valid URL for ${field.replace('_', ' ')}`);
+      if (
+        formData[field as keyof FormData] &&
+        !validateUrl(formData[field as keyof FormData] as string)
+      ) {
+        toast.error(`Please enter a valid URL for ${field.replace("_", " ")}`);
         return;
       }
     }
@@ -238,15 +261,15 @@ const ProfileSettings = () => {
           twitter: formData.twitter,
           github: formData.github,
           linkedin: formData.linkedin,
-          portfolio: formData.portfolio
+          portfolio: formData.portfolio,
         },
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       };
 
       const { data, error } = await supabase
-        .from('settings')
+        .from("settings")
         .upsert(updates)
-        .eq('user_id', user.id)
+        .eq("user_id", user.id)
         .select()
         .single();
 
@@ -255,17 +278,17 @@ const ProfileSettings = () => {
       // Update auth metadata if name changed
       if (formData.name !== profile?.name) {
         await supabase.auth.updateUser({
-          data: { name: formData.name }
+          data: { name: formData.name },
         });
       }
 
       setProfile(data);
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3000);
-      toast.success('Profile updated successfully!');
+      toast.success("Profile updated successfully!");
     } catch (err: any) {
       console.error("Error saving profile:", err);
-      toast.error(err.message || 'Failed to save profile');
+      toast.error(err.message || "Failed to save profile");
     } finally {
       setIsSaving(false);
     }
@@ -291,7 +314,9 @@ const ProfileSettings = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
-      <h1 className="text-2xl font-semibold text-gray-800 dark:text-white mb-8">Profile Settings</h1>
+      <h1 className="text-2xl font-semibold text-gray-800 dark:text-white mb-8">
+        Profile Settings
+      </h1>
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Profile Picture Section */}
@@ -305,7 +330,11 @@ const ProfileSettings = () => {
               )}
 
               <Image
-                src={profile?.avatar_url || user?.user_metadata?.avatar_url || boy1Img}
+                src={
+                  profile?.avatar_url ||
+                  user?.user_metadata?.avatar_url ||
+                  boy1Img
+                }
                 alt="Profile image"
                 fill
                 className="rounded-full object-cover"
@@ -335,7 +364,7 @@ const ProfileSettings = () => {
 
             <div className="text-center">
               <h2 className="text-lg font-medium text-gray-800 dark:text-white">
-                {formData.name || user?.email?.split('@')[0] || 'User'}
+                {formData.name || user?.email?.split("@")[0] || "User"}
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {user?.email}
@@ -347,7 +376,10 @@ const ProfileSettings = () => {
           <div className="flex-1 space-y-6 w-full">
             {/* Name Field */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
                 Full Name
               </label>
               <input
@@ -364,8 +396,14 @@ const ProfileSettings = () => {
 
             {/* Bio Field */}
             <div>
-              <label htmlFor="bio" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Bio <span className="text-gray-500 text-xs">({formData.bio.length}/200)</span>
+              <label
+                htmlFor="bio"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
+                Bio{" "}
+                <span className="text-gray-500 text-xs">
+                  ({formData.bio.length}/200)
+                </span>
               </label>
               <textarea
                 id="bio"
@@ -386,12 +424,17 @@ const ProfileSettings = () => {
 
         {/* Privacy Settings Section */}
         <section className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Privacy Settings</h2>
-          
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+            Privacy Settings
+          </h2>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Email Visibility */}
             <div>
-              <label htmlFor="public_email" className="flex items-center gap-3 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="public_email"
+                className="flex items-center gap-3 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
                 <input
                   type="checkbox"
                   id="public_email"
@@ -409,7 +452,10 @@ const ProfileSettings = () => {
 
             {/* Pronouns */}
             <div>
-              <label htmlFor="pronouns" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="pronouns"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
                 Pronouns
               </label>
               <select
@@ -431,11 +477,16 @@ const ProfileSettings = () => {
 
         {/* Links Section */}
         <section className="space-y-6">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Your Links</h2>
-          
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+            Your Links
+          </h2>
+
           {/* Website */}
           <div>
-            <label htmlFor="website_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label
+              htmlFor="website_url"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
               Personal Website
             </label>
             <input
@@ -448,14 +499,19 @@ const ProfileSettings = () => {
               placeholder="https://yourwebsite.com"
             />
             {formData.website_url && !validateUrl(formData.website_url) && (
-              <p className="mt-1 text-sm text-red-500">Please enter a valid URL</p>
+              <p className="mt-1 text-sm text-red-500">
+                Please enter a valid URL
+              </p>
             )}
           </div>
 
           {/* Social Links */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="twitter" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="twitter"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
                 Twitter
               </label>
               <input
@@ -468,12 +524,17 @@ const ProfileSettings = () => {
                 placeholder="https://twitter.com/username"
               />
               {formData.twitter && !validateUrl(formData.twitter) && (
-                <p className="mt-1 text-sm text-red-500">Please enter a valid URL</p>
+                <p className="mt-1 text-sm text-red-500">
+                  Please enter a valid URL
+                </p>
               )}
             </div>
 
             <div>
-              <label htmlFor="github" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="github"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
                 GitHub
               </label>
               <input
@@ -486,12 +547,17 @@ const ProfileSettings = () => {
                 placeholder="https://github.com/username"
               />
               {formData.github && !validateUrl(formData.github) && (
-                <p className="mt-1 text-sm text-red-500">Please enter a valid URL</p>
+                <p className="mt-1 text-sm text-red-500">
+                  Please enter a valid URL
+                </p>
               )}
             </div>
 
             <div>
-              <label htmlFor="linkedin" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="linkedin"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
                 LinkedIn
               </label>
               <input
@@ -504,12 +570,17 @@ const ProfileSettings = () => {
                 placeholder="https://linkedin.com/in/username"
               />
               {formData.linkedin && !validateUrl(formData.linkedin) && (
-                <p className="mt-1 text-sm text-red-500">Please enter a valid URL</p>
+                <p className="mt-1 text-sm text-red-500">
+                  Please enter a valid URL
+                </p>
               )}
             </div>
 
             <div>
-              <label htmlFor="portfolio" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="portfolio"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
                 Portfolio
               </label>
               <input
@@ -522,7 +593,9 @@ const ProfileSettings = () => {
                 placeholder="https://yourportfolio.com"
               />
               {formData.portfolio && !validateUrl(formData.portfolio) && (
-                <p className="mt-1 text-sm text-red-500">Please enter a valid URL</p>
+                <p className="mt-1 text-sm text-red-500">
+                  Please enter a valid URL
+                </p>
               )}
             </div>
           </div>
@@ -534,9 +607,19 @@ const ProfileSettings = () => {
             type="submit"
             disabled={isSaving}
             className={`flex items-center gap-2 px-6 py-3 rounded-lg text-white font-medium transition-colors ${
-              isSaving ? 'bg-blue-400' : saveSuccess ? 'bg-green-500' : 'bg-blue-600 hover:bg-blue-700'
+              isSaving
+                ? "bg-blue-400"
+                : saveSuccess
+                ? "bg-green-500"
+                : "bg-blue-600 hover:bg-blue-700"
             }`}
-            aria-label={isSaving ? "Saving changes" : saveSuccess ? "Changes saved" : "Save changes"}
+            aria-label={
+              isSaving
+                ? "Saving changes"
+                : saveSuccess
+                ? "Changes saved"
+                : "Save changes"
+            }
           >
             {isSaving ? (
               <>

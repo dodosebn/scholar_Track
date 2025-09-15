@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import FunaiLogo from "@/public/images/funai-logo.png";
+import ScholarhubLogo from "@/public/scholarlogo.png";
 import GetBtn from "@/utils/getBtn";
 import Logo from "@/utils/logo";
 import { IoMenu } from "react-icons/io5";
@@ -10,10 +10,11 @@ import TransitionLink from "@/utils/transitionLink";
 
 const NavBar = () => {
   const navLinks = [
-    {name:"Home", id: 1, linkPath: '/'}, 
-    {name: "AboutUs", id:2, linkPath: '/Features/About'}, 
-    {name:"News", id:3, linkPath:'News'}, 
-    {name:"CGPA Calculator", id:4, linkPath:'/Features/GPACalc'}];
+    { name: "Home", id: 1, linkPath: "/" },
+    { name: "About", id: 2, linkPath: "/Features/About" },
+    { name: "News", id: 3, linkPath: "News" },
+    { name: "CGPA Calculator", id: 4, linkPath: "/Features/GPACalc" },
+  ];
   const [isMobile, setIsMobile] = useState(false);
 
   const handleDropDown = () => {
@@ -25,7 +26,7 @@ const NavBar = () => {
       <div className="flex justify-between items-center py-3 px-4 md:px-10">
         <div className="flex items-center">
           <Image
-            src={FunaiLogo}
+            src={ScholarhubLogo}
             alt="Funai Logo"
             width={40}
             height={40}
@@ -39,10 +40,12 @@ const NavBar = () => {
             {navLinks.map((itm) => (
               <li key={itm.id} className="relative group">
                 <span className="hover:text-[#000] hover:font-bold cursor-pointer">
-                  <TransitionLink href={itm.linkPath}>{itm.name}</TransitionLink >
+                  <TransitionLink href={itm.linkPath}>
+                    {itm.name}
+                  </TransitionLink>
                 </span>
-                <motion.span 
-                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-600"
+                <motion.span
+                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#0d3b62]"
                   whileHover={{ width: "100%" }}
                   transition={{ duration: 0.3 }}
                 />
@@ -52,11 +55,18 @@ const NavBar = () => {
         </div>
 
         <div className="md:flex hidden ">
-        <TransitionLink href="/Features/SignUp"> <GetBtn /></TransitionLink> 
+          <TransitionLink href="/Features/SignUp">
+            {" "}
+            <GetBtn />
+          </TransitionLink>
         </div>
 
         <div className="md:hidden">
-          <IoMenu onClick={handleDropDown} size={24} className="text-gray-700" />
+          <IoMenu
+            onClick={handleDropDown}
+            size={24}
+            className="text-gray-700"
+          />
         </div>
 
         <AnimatePresence>
@@ -71,10 +81,13 @@ const NavBar = () => {
                 {navLinks.map((itm) => (
                   <li key={itm.id} className="relative group">
                     <span className="hover:text-[#000] hover:font-bold cursor-pointer text-gray-800">
-                    <TransitionLink  href={itm.linkPath}> {itm.name}</TransitionLink >
+                      <TransitionLink href={itm.linkPath}>
+                        {" "}
+                        {itm.name}
+                      </TransitionLink>
                     </span>
-                    <motion.span 
-                      className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-600"
+                    <motion.span
+                      className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#0d3b62]"
                       whileHover={{ width: "100%" }}
                       transition={{ duration: 0.3 }}
                     />
@@ -82,7 +95,10 @@ const NavBar = () => {
                 ))}
               </ul>
               <div className="mt-2 flex justify-center text-center">
-        <TransitionLink href="/Features/SignUp"> <GetBtn /></TransitionLink> 
+                <TransitionLink href="/Features/SignUp">
+                  {" "}
+                  <GetBtn />
+                </TransitionLink>
               </div>
             </motion.div>
           )}
